@@ -24,7 +24,7 @@ separator()
 # mailTo = "email@to"
 # mailSubject = "email test"
 # mailBody = "email body"
-# mySmtp = "mail.contentamobile.com"
+# mySmtp = "mail.domain.com"
 # sendEmail(mailFrom, mailTo, mailSubject, mailBody,mySmtp)
 
 separator()
