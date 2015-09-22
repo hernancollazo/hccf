@@ -50,8 +50,7 @@ from random import *
 
 def separator():
     "Just display a line"
-    print "\n**************************************************************************************\n"
-
+    print "\n" + "*" * 80 + "\n"
 
 def readConfigValue(configFile, section, variable):
     "Get a var value from config file"
