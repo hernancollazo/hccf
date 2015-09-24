@@ -39,9 +39,16 @@ import time
 import datetime
 import ConfigParser
 import shutil
-import commands
 import smtplib
 from random import *
+
+OLD_PYTHON = False
+
+try:
+    from subprocess import Popen, PIPE, STDOUT
+except ImportError:
+    OLD_PYTHON = True
+    import commands
 
 #########################################################################
 ### Common Functions ####################################################
@@ -141,3 +148,27 @@ def make_unicode(input):
         return input
     else:
         return input
+
+
+def runCmd(cmd):
+    "Runs a system command and returns statuscode/output"
+    if OLD_PYTHON:
+        returncode, stdout = commands.getstatusoutput(cmd)
+        if returncode >= 256:
+            returncode = returncode / 256
+    else:
+        try:
+            process = Popen( cmd.split(), stdin=PIPE, stdout=PIPE, stderr=STDOUT )
+        except OSError, error:
+            error = str(error)
+            if error == "No such file or directory":
+                end(UNKNOWN, "Cannot find command '%s'" % cmd.split()[0])
+            end(UNKNOWN, "Error trying to run command '%s' - %s" % (cmd.split()[0], error))
+        output = process.communicate()
+        returncode = process.returncode
+        stdout = output[0]
+    if stdout == None or stdout == "":
+        print("No output from command!")
+    else:
+        output = str(stdout).split("\n")
+    return (returncode,output)

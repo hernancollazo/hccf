@@ -34,3 +34,7 @@ time.sleep(5)
 query_end_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 diff_time = comp_dates(query_start_time, query_end_time)
 print "Start: [" + str(query_start_time) + "]\nEnd: [" + str(query_end_time) + "]\nDiff (seconds): [" + str(diff_time) + "]\n"
+
+cmdStatus,cmdOutput = runCmd("ls -la /")
+print cmdStatus
+print cmdOutput
